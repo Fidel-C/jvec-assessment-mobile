@@ -1,20 +1,41 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
 
+// contact_model.dart
 class Contact {
-  final String first_name;
-  final String last_name;
-  final String phone_number;
+  final int? id;
+  final String firstName;
+  final String lastName;
+  final String phoneNumber;
 
-  Contact(
-      {required this.first_name,
-      required this.last_name,
-      required this.phone_number});
+  Contact({
+    this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.phoneNumber,
+  });
 
-  fromJson(Map<String, dynamic> data) {
-    return Contact(
-        first_name: data['first_name'],
-        last_name: data['last_name'],
-        phone_number: data['phone_number']);
+  
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'first_name': firstName,
+      'last_name': lastName,
+      'phone_number': phoneNumber,
+    };
   }
+
+  factory Contact.fromMap(Map<String, dynamic> map) {
+    return Contact(
+      id: map['id'] != null ? map['id'] as int : null,
+      firstName: map['first_name'] as String,
+      lastName: map['last_name'] as String,
+      phoneNumber: map['phone_number'] as String,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Contact.fromJson(String source) => Contact.fromMap(json.decode(source) as Map<String, dynamic>);
 }
-                                                                                    
